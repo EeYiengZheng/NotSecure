@@ -1,0 +1,41 @@
+<html>
+<head>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<h1My Information Security Blog</h1>
+<h2>Encryption / Decryption / Hashing Demo</h2>
+<form action="crypto_action.jsp" method="POST">
+<h3>Input</h3>
+<textarea name="indata" rows="10" cols="100"></textarea><br>
+<br>
+<table cellpadding="10">
+<tr><td width="150px">Input encoding:</td><td>
+<select name="encoding">
+  <option value="Base64">Base64</option>
+  <option value="ASCII">ASCII</option>
+</select>
+</td></tr>
+<tr><td>Action:</td><td>
+<select name="etype">
+  <option value="Encrypt">Encrypt</option>
+  <option value="Decrypt">Decrypt</option>
+  <option value="Hash">Hash</option>
+</select>
+</td></tr>
+<tr><td>Key if applicable:</td><td>
+<input name="key" size=30/>
+</td></tr>
+<tr><td>Algorithm:</td><td>
+<select name="algo">
+  <option value="RC4">RC4</option>
+  <option value="AES">AES</option>
+  <option value="SHA1">SHA1</option>
+  <option value="SHA2">SHA2-256</option>
+</select>
+</table>
+</td></tr>
+<input type="submit" value="Submit"/>
+</form>
+</body>
+</html>

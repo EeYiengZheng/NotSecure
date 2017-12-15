@@ -1,0 +1,41 @@
+# Compiled class file
+*.class
+
+# Log file
+*.log
+
+# BlueJ files
+*.ctxt
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+# *.jar
+# *.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+
+# IDE specifics
+.idea
+*.iml
+out
+
+# Eclipse EE
+.classpath
+.project
+.settings/
+WebContent/
+WEB-INF/classes/META-INF/
+/build/
+
+# exclude java beans class folder
+!WEB-INF\classes\main\java\beans\*.class
+
+# excluded
+excluded/*
