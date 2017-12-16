@@ -1,4 +1,4 @@
-<%@page import="java.sql.*, java.util.*, java.io.*" %>
+<%@page import="java.sql.*, java.util.*" %>
 <%@include file="taglibs.jsp" %>
 <%
     Connection conn = null;

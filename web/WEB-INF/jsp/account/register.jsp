@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@include file="/taglibs.jsp" %>
+<%@include file="/WEB-INF/jsp/taglibs.jsp" %>
 <jsp:useBean id='user' scope='session' class='main.java.beans.UserBean'/>
 <jsp:setProperty name='user' property='*'/>
 
@@ -13,7 +13,8 @@
                         </h2><br>
                     </div>
                     <div class="panel-body">
-                        <form role="form" method="post" action="register_action.jsp">
+                        <form id="reg_form" role="form" method="POST"
+                              action="<c:url value="/account/register_action"/>">
                             <div class="form-group">
                                 <input type="text" name="disp_name" id="display_name_input" size="32"
                                        class="form-control input-sm"
@@ -44,7 +45,12 @@
                                     </div>
                                 </div>
                             </div>
-                            <input type="submit" value="Register" class="btn btn-primary btn-block">
+                            <div id='recaptcha' class="g-recaptcha"
+                                 data-sitekey="6LcaOz0UAAAAAC3DojhPM94PuuAU7Qr0OEKS88v_"
+                                 data-callback="onSubmit"
+                                 data-size="invisible">
+                            </div>
+                            <input id="reg_btn" type="submit" value="Register" class="btn btn-primary btn-block">
                         </form>
                         <div id="err-msg">
                             <c:if test="${not empty errorMessages}">
@@ -65,11 +71,8 @@
         <title>Register</title>
     </jsp:attribute>
     <jsp:attribute name="scripts">
+        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
         <script>
-            function valid_pass() {
-                $("#password_confirmation").attr("pattern", $("#password").val());
-            }
-
             $(document).ready(function () {
                 var uname = document.getElementById("user_name");
                 uname.addEventListener("input", function (event) {
@@ -92,7 +95,41 @@
                     } else pass1.setCustomValidity("");
                 });
             });
+
+
+            function valid_pass() {
+                $("#password_confirmation").attr("pattern", $("#password").val());
+            }
+
+            $("#reg_form").submit(function (e) {
+                e.preventDefault();
+                fail = "";
+                if (!$("#user_name").val()) fail += "need username";
+                if (!$("#display_name_input").val()) fail += "need display name";
+                if (!fail) grecaptcha.execute();
+                else console.log(fail);
+            });
+
+            function onSubmit(token) {
+                $.ajax({
+                    url: '<c:url value="/account/register_action"/>',
+                    type: 'POST',
+                    dataType: 'html',
+                    data: $("#reg_form").serialize(),
+                    success: function (respond) {
+                        console.log("ajax success");
+                        console.log("register_action triggered");
+                        $("html").html(respond);
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        console.log(xhr.status);
+                        console.log(thrownError);
+                        $("#err-msg").text("POST request failed. " + thrownError + " :" + xhr.status);
+                    }
+                });
+            }
         </script>
+
     </jsp:attribute>
     <jsp:body>
         ${bodyContent}

@@ -4,14 +4,13 @@
 <%@attribute name="bodyTop" fragment="true" %>
 <%@attribute name="bodyBottom" fragment="true" %>
 <%@attribute name="scripts" fragment="true" %>
-<%@include file="/taglibs.jsp" %>
-
+<%@include file="../jsp/taglibs.jsp" %>
 <jsp:useBean id="user" class="main.java.beans.UserBean" scope="session"/>
+
 <html>
 <head>
     <jsp:invoke fragment="head"/>
-    <link rel="shortcut icon" type="image/png"
-          href="https://prometheus.atlas-sys.com/download/attachments/116130109/database02.png"/>
+    <link rel="shortcut icon" href="<c:url value="/resource/open.png"/>" type="image/png" />
     <meta name="author" content="Ee Zheng - CS166 Security Project">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, height=device-height initial-scale=1, shrink-to-fit=no">
@@ -56,7 +55,7 @@
 </head>
 <body id="inject-body">
 <nav class="navbar navbar-expand-lg navbar-light ">
-    <a class="navbar-brand mb-0" href="<c:url value="#"/>"><i class="fa fa-2x fa-user-secret" aria-hidden="true"></i><span class="d-inline-block align-top" style="font-size: 1.1em;"> NotSecure</span></a>
+    <a class="navbar-brand mb-0" href="<c:url value="/"/>"><i class="fa fa-2x fa-user-secret" aria-hidden="true"></i><span class="d-inline-block align-top" style="font-size: 1.1em;"> NotSecure</span></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar"
             aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -66,7 +65,7 @@
         <ul class="nav navbar-nav mr-auto">
             <c:if test="${user.loggedIn}">
                 <li class="nav-item">
-                    <a class="nav-link" href="<c:url value="/userinfo/myInfo.jsp"/>">MyInfo</a>
+                    <a class="nav-link" href="<c:url value="#"/>">MyInfo</a>
                 </li>
                 <c:if test="${user.isAdmin().equals('y')}">
                     <li class="nav-item">
@@ -99,15 +98,15 @@
             <c:choose>
                 <c:when test="${user.loggedIn}">
                     <li class="nav-item">
-                        <a class="nav-link" href="<c:url value="/account/logout_action.jsp"/>">Sign Out</a>
+                        <a class="nav-link" href="<c:url value="/account/logout_action"/>">Sign Out</a>
                     </li>
                 </c:when>
                 <c:otherwise>
                     <li class="nav-item ">
-                        <a class="nav-link" href="<c:url value="/account/login.jsp"/>">Login</a>
+                        <a class="nav-link" href="<c:url value="/account/login"/>">Login</a>
                     </li>
                     <li class="nav-item ">
-                        <a class="nav-link" href="<c:url value="/account/register.jsp"/>">Register</a>
+                        <a class="nav-link" href="<c:url value="/account/register"/>">Register</a>
                     </li>
                 </c:otherwise>
             </c:choose>
@@ -143,17 +142,6 @@
         integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
         crossorigin="anonymous"></script>
 <script>
-    function openPage(pageName, elmnt, color) {
-        var i, tabcontent, tablinks;
-        $(".tabcontent").hide();
-        tablinks = document.getElementsByClassName("tablink");
-        for (i = 0; i < tablinks.length; i++) {
-            tablinks[i].style.backgroundColor = "";
-        }
-        $("#" + pageName).slideDown();
-        elmnt.style.backgroundColor = color;
-    }
-
     setInterval(function () {
         if (window.innerHeight >= 800) $("#static-footer").fadeIn();
         if (window.innerHeight < 800) $("#static-footer").fadeOut();

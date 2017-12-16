@@ -3,4 +3,80 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
+    <servlet>
+        <servlet-name>index</servlet-name>
+        <jsp-file>/index.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>index</servlet-name>
+        <url-pattern>/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>register</servlet-name>
+        <jsp-file>/WEB-INF/jsp/account/register.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>register</servlet-name>
+        <url-pattern>/account/register</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>login</servlet-name>
+        <jsp-file>/WEB-INF/jsp/account/login.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>login</servlet-name>
+        <url-pattern>/account/login</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>login_action</servlet-name>
+        <jsp-file>/WEB-INF/jsp/account/login_action.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>login_action</servlet-name>
+        <url-pattern>/account/login_action</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>register_action</servlet-name>
+        <jsp-file>/WEB-INF/jsp/account/register_action.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>register_action</servlet-name>
+        <url-pattern>/account/register_action</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>logout</servlet-name>
+        <jsp-file>/WEB-INF/jsp/account/logout_action.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>logout</servlet-name>
+        <url-pattern>/account/logout_action</url-pattern>
+    </servlet-mapping>
+
+
+
+
+
+
+    <servlet>
+        <servlet-name>blogs_list</servlet-name>
+        <jsp-file>/WEB-INF/jsp/blogs/blogs_list.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>blogs_list</servlet-name>
+        <url-pattern>/blogs/list</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>blogs_search</servlet-name>
+        <jsp-file>/WEB-INF/jsp/blogs/blogs_search.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>blogs_search</servlet-name>
+        <url-pattern>/blogs/search</url-pattern>
+    </servlet-mapping>
 </web-app>

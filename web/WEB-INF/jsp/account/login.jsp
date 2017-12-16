@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@include file="../taglibs.jsp" %>
+<%@include file="/WEB-INF/jsp/taglibs.jsp" %>
 <jsp:useBean id='user' scope='session' class='main.java.beans.UserBean'/>
 <jsp:setProperty name='user' property='*'/>
 
@@ -12,7 +12,7 @@
                         <h2 class="" style="margin-bottom: 5px;">Login</h2><br>
                     </div>
                     <div class="panel-body">
-                        <form role="form" action="login_action.jsp">
+                        <form role="form" method="POST" action="<c:url value="/account/login_action"/> ">
                             <div class="form-group">
                                 <input type="text" name="username" id="user_name" class="form-control input-sm"
                                        placeholder="Username" required pattern="[a-zA-Z0-9_]{4,64}" minlength="4"
