@@ -1,29 +1,44 @@
 <%@tag description="Overall Page template" pageEncoding="UTF-8" %>
 <%@attribute name="head" fragment="true" %>
 <%@attribute name="style" fragment="true" %>
+<%@attribute name="belowHead" fragment="true" %>
 <%@attribute name="bodyTop" fragment="true" %>
 <%@attribute name="bodyBottom" fragment="true" %>
 <%@attribute name="scripts" fragment="true" %>
-<%@include file="../jsp/taglibs.jsp" %>
+<%@include file="/WEB-INF/jsp/taglibs.jsp" %>
 <jsp:useBean id="user" class="main.java.beans.UserBean" scope="session"/>
 
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <jsp:invoke fragment="head"/>
-    <link rel="shortcut icon" href="<c:url value="/resource/open.png"/>" type="image/png" />
+    <link rel="shortcut icon" href="<c:url value="/resource/open.png"/>" type="image/png"/>
     <meta name="author" content="Ee Zheng - CS166 Security Project">
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, height=device-height initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
           integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-
+    <jsp:invoke fragment="head"/>
     <style>
-        .jumbotron {
-            color: #555555;
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
             background: #f5f5f5;
-            height: calc(100% - 66px);
-            margin: 0;
+        }
+
+        .jumbotron {
+            background: #f5f5f5;
+            height: calc(100vh - 66px);
+            background-size: cover;
+            margin-bottom: 0 !important;
+
+        }
+
+        .list-group {
+            margin-bottom: 60px;
         }
 
         #err-msg {
@@ -36,8 +51,28 @@
             align-items: center;
         }
 
+        .link-danger {
+            color: red !important;
+        }
+
+        .link-primary {
+            color: #868e96 !important;;
+        }
+
+        h1.panel-text-size {
+            font-size: 4rem;
+        }
+
+        h3.panel-text-size {
+            font-size: 2rem;
+        }
+
+        p.panel-text-size {
+            font-size: 1rem;
+        }
+
         footer {
-            position: relative;
+            position: fixed;
             width: 100%;
         }
 
@@ -50,12 +85,18 @@
             bottom: 0;
         }
 
+        .bd-pageheader {
+            padding-bottom: 20px;
+        }
+
         <jsp:invoke fragment="style"/>
     </style>
 </head>
 <body id="inject-body">
-<nav class="navbar navbar-expand-lg navbar-light ">
-    <a class="navbar-brand mb-0" href="<c:url value="/"/>"><i class="fa fa-2x fa-user-secret" aria-hidden="true"></i><span class="d-inline-block align-top" style="font-size: 1.1em;"> NotSecure</span></a>
+<nav class="navbar navbar-expand-xl navbar-light ">
+    <a class="navbar-brand mb-0" href="<c:url value="/"/>"><i class="fa fa-2x fa-user-secret"
+                                                              aria-hidden="true"></i><span
+            class="d-inline-block align-top" style="font-size: 1.1em;"> NotSecure</span></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar"
             aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -63,68 +104,71 @@
 
     <div class="collapse navbar-collapse" id="navbar">
         <ul class="nav navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link link-primary" href="<c:url value="/demo/links"/>">CS166 Demos</a>
+            </li>
             <c:if test="${user.loggedIn}">
                 <li class="nav-item">
-                    <a class="nav-link" href="<c:url value="#"/>">MyInfo</a>
+                    <a class="nav-link link-primary" href="<c:url value="/blogs/list"/>">My Blogs</a>
                 </li>
-                <c:if test="${user.isAdmin().equals('y')}">
-                    <li class="nav-item">
-                        <a class="nav-link" href="<c:url value="#"/>">admin only</a>
+                <li class="nav-item">
+                    <a class="nav-link link-primary" href="<c:url value="/blogs/create"/>">Create Blogs</a>
+                </li>
+
+                <c:if test="${user.admin == true}">
+                    <li class="nav-item" >
+                        <a class="nav-link link-danger" style="pointer-events: none;" href="<c:url value="#"/>">Admin Access</a>
                     </li>
                 </c:if>
-                <li class="nav-item">
-                    <a class="nav-link" href="<c:url value="#"/>">search courses</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="<c:url value="#"/>">Gradebook</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="<c:url value="#"/>">Employees</a>
-                </li>
-            </c:if>
-
-            <c:if test="${user.loggedIn && user.admin == 'y'}">
-                <li class="nav-item">
-                    <a style="color: red;" class="nav-link" href="<c:url value="#"/>">Access</a>
-                </li>
             </c:if>
         </ul>
 
         <ul class="nav navbar-nav">
-            <form class="form-inline my-2 my-md-0" style="margin-right: 20px;">
-                <input class="form-control mr-sm-2" type="text" placeholder="Search">
+            <form id="front-page-search" method="POST" action="<c:url value="/blog/search" />" class="form-inline my-2 my-md-0" style="margin-right: 20px;">
+                <input class="form-control mr-sm-2" name="title_filter" type="text" placeholder="Search titles">
                 <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Search</button>
             </form>
             <c:choose>
                 <c:when test="${user.loggedIn}">
                     <li class="nav-item">
-                        <a class="nav-link" href="<c:url value="/account/logout_action"/>">Sign Out</a>
+                        <a class="nav-link disabled" style="color: #7a7a7a;">Hi, <%=user.getDisplayName()%></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link link-danger" href="<c:url value="/account/logout_action"/>">Sign Out</a>
                     </li>
                 </c:when>
                 <c:otherwise>
-                    <li class="nav-item ">
-                        <a class="nav-link" href="<c:url value="/account/login"/>">Login</a>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" style="color: #7a7a7a;">Welcome, Guest </a>
                     </li>
                     <li class="nav-item ">
-                        <a class="nav-link" href="<c:url value="/account/register"/>">Register</a>
+                        <a class="nav-link link-primary" href="<c:url value="/account/login"/>">Login</a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link link-primary" href="<c:url value="/account/register"/>">Register</a>
                     </li>
                 </c:otherwise>
             </c:choose>
         </ul>
     </div>
 </nav>
+
 <div class="jumbotron">
     <div class="container">
+        <div class="container">
+            <jsp:invoke fragment="belowHead"/>
+        </div>
         <div class="row justify-content-center" id="body-top">
             <jsp:invoke fragment="bodyTop"/>
         </div>
-        <div class="row" id="body-middle">
+        <div class="row justify-content-center" id="body-middle">
             <jsp:doBody/>
         </div>
         <div class="row justify-content-center" id="body-bottom">
             <jsp:invoke fragment="bodyBottom"/>
         </div>
     </div>
+
 </div>
 <footer id="static-footer">
     <p class="footer-text">
@@ -142,11 +186,18 @@
         integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
         crossorigin="anonymous"></script>
 <script>
+
+
     setInterval(function () {
-        if (window.innerHeight >= 800) $("#static-footer").fadeIn();
-        if (window.innerHeight < 800) $("#static-footer").fadeOut();
-    }, 500);
+        if ($(window).scrollTop() + $(window).height() > $(document).height() - 50) {
+            $("#static-footer").fadeIn();
+        }
+        else $("#static-footer").fadeOut();
+    }, 2000);
+
+
 </script>
 <jsp:invoke fragment="scripts"/>
 </body>
+
 </html>

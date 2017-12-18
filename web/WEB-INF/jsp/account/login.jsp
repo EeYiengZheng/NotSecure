@@ -1,7 +1,15 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@include file="/WEB-INF/jsp/taglibs.jsp" %>
 <jsp:useBean id='user' scope='session' class='main.java.beans.UserBean'/>
 <jsp:setProperty name='user' property='*'/>
+
+<%
+    if (user.isLoggedIn()) {
+        RequestDispatcher rd = request.getRequestDispatcher("/");
+        response.sendRedirect("/");
+    }
+%>
 
 <c:set var="bodyContent">
     <div class="container">

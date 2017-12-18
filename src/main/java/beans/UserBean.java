@@ -5,6 +5,7 @@ public class UserBean {
     private String displayName;
     private boolean loggedIn;
     private boolean admin;
+    private String csrf;
 
 
     public UserBean() {
@@ -40,5 +41,13 @@ public class UserBean {
 
     public boolean isAdmin() {
         return admin;
+    }
+
+    public void setCsrf(String csrf) {
+        this.csrf = csrf;
+    }
+
+    public String getCsrf() {
+        return csrf;
     }
 }

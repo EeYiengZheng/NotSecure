@@ -8,20 +8,10 @@
 <c:set var="bodyContent">
     <div class="list-group">
         <%
-            RequestDispatcher rd = request.getRequestDispatcher("/");
+            RequestDispatcher rd = request.getRequestDispatcher("/blogs/search");
             List<String> errorMessages = new ArrayList();
 
-            if (!user.isLoggedIn()) {
-                String curCSRF = request.getParameter("csrf_token");
-                if (curCSRF == null || !user.getCsrf().equals(curCSRF.trim())) {
-                    errorMessages.add("Not authorized to access");
-                    request.setAttribute("errorMessages", errorMessages);
-                    rd.forward(request, response);
-                    response.sendRedirect("/");
-                }
-            }
-
-            String query = "SELECT DISTINCT blog_id, title, display_name, LEFT(content , 150) AS content, created FROM blogs NATURAL JOIN (SELECT username AS author, display_name FROM users)un WHERE author=? AND (title LIKE ? AND content LIKE ?) LIMIT ?";
+            String query = "SELECT DISTINCT blog_id, title, display_name, LEFT(content , 150) AS content, created FROM blogs NATURAL JOIN (SELECT username AS author, display_name FROM users)un WHERE title LIKE ? OR content LIKE ? LIMIT ?";
 
             try {
                 PreparedStatement stmt = conn.prepareStatement(query);
@@ -35,19 +25,19 @@
                 limitCount = limitCount == null ? "" : limitCount.trim().replaceAll("[^0-9]", "");
 
                 int limit = 0;
-                titleFilter = !titleFilter.equals("") ? "%" + titleFilter + "%" : "%";
-                contentFilter = !contentFilter.equals("") ? "%" + contentFilter + "%" : "%";
+                titleFilter = !titleFilter.equals("") ? "%" + titleFilter + "%" : "";
+                contentFilter = !contentFilter.equals("") ? "%" + contentFilter + "%" : "";
                 limit = !limitCount.equals("") ? Integer.parseInt(limitCount) : 30;
                 limit = limit > 30 ? 30 : limit;
-                stmt.setString(1, user.getUsername());
-                stmt.setString(2, titleFilter);
-                stmt.setString(3, contentFilter);
-                stmt.setInt(4, limit);
+                stmt.setString(1, titleFilter);
+                stmt.setString(2, contentFilter);
+                stmt.setInt(3, limit);
                 ResultSet rs = stmt.executeQuery();
 
                 while (rs.next()) {
                     long blogID = rs.getLong("blog_id");
 
+                    String dispName = rs.getString("display_name");
                     String title = rs.getString("title");
                     title = title.length() > 30 ? title.substring(0, 30).trim() + "..." : title.trim();
 
@@ -76,8 +66,7 @@
 
                     String dateOrTime = switchToDate ? dateSince : timeSince;
         %>
-        <a href="<c:url value="/blogs/view?blog_id="/><%=blogID%>"
-           class="list-group-item list-group-item-action flex-column align-items-start">
+        <a href="<c:url value="/blogs/view?blog_id="/><%=blogID%>" class="list-group-item list-group-item-action flex-column align-items-start">
             <div class="d-flex w-100 justify-content-between">
                 <h5 class="mb-1"><%=title%>
                 </h5>
@@ -86,12 +75,13 @@
             </div>
             <p class="mb-1"><%=contentSnip%>
             </p>
-            <small>By: <%=user.getDisplayName()%>
+            <small>By: <%=dispName%>
             </small>
         </a>
         <%
                 }
             } catch (SQLException e) {
+                rd = request.getRequestDispatcher("/");
                 errorMessages.add("Error retrieving blogs");
                 request.setAttribute("errorMessages", errorMessages);
                 rd.forward(request, response);
@@ -107,29 +97,25 @@
     </jsp:attribute>
     <jsp:attribute name="belowHead">
         <div class="panel panel-heading" style="margin-bottom: 30px;">
-            <h3 class="text-center panel-text-size">Hey, here are some of your blogs</h3>
-            <p class="text-center panel-text-size">Filter them to get the most relevant ones</p>
+            <h3 class="text-center panel-text-size">Search for blogs</h3>
+            <p class="text-center panel-text-size">Did you find you want? <br>
+                You can search by title, content or both<br>
+                Further refine your search below
+            </p>
         </div>
-                <div id="err-msg">
-                        <c:if test="${not empty errorMessages}">
-                            <c:forEach items="${errorMessages}" var="errorMessage">
-                                <c:out value="${errorMessage}"/><br>
-                            </c:forEach>
-                        </c:if>
-                </div>
-        <form id="convFilter" class="form-horizontal" action="" method="POST">
+        <form id="convFilter" method="POST" class="form-horizontal" action="">
             <div class="row justify-content-md-center" style="margin-bottom: 50px;" align="center">
                 <div class="col-md-8">
                     <div class="form-group">
                         <div class="col-sm-10">
                             <input type="text" class="form-control" name="title_filter" id="title_filter"
-                                   placeholder="Filter by title">
+                                   placeholder="Search by title">
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-sm-10">
                             <input type="text" class="form-control" name="content_filter" id="content_filter"
-                                   placeholder="Filter by content">
+                                   placeholder="Search by content">
                         </div>
                     </div>
                     <div class="form-group">
@@ -139,7 +125,7 @@
                         </div>
                     </div>
                     <div class="col-sm-10">
-                        <input id="csrf-token" name="csrf_token" type="hidden" value="${user.csrf}"/>
+
                         <button type="submit" class="btn btn-secondary btn-lg btn-block">Filter</button>
                     </div>
                 </div>

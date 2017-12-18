@@ -1,7 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@include file="../databases.jsp" %>
+<%@include file="/WEB-INF/jsp/databases.jsp" %>
 <jsp:useBean id='user' scope='session' class='main.java.beans.UserBean'/>
-<jsp:setProperty name='user' property='*'/>
 
 <c:choose>
     <c:when test="${user.loggedIn}">
@@ -33,7 +31,7 @@
             request.setAttribute("resultMessage", "<p>Passwords did not match.</p>");
         }
 
-        RequestDispatcher rd = request.getRequestDispatcher("myInfo.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("");
         rd.forward(request, response);
 
 

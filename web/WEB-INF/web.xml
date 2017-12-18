@@ -58,25 +58,75 @@
     </servlet-mapping>
 
 
-
-
-
-
     <servlet>
-        <servlet-name>blogs_list</servlet-name>
-        <jsp-file>/WEB-INF/jsp/blogs/blogs_list.jsp</jsp-file>
+        <servlet-name>blog_list</servlet-name>
+        <jsp-file>/WEB-INF/jsp/blogs/blog_list.jsp</jsp-file>
     </servlet>
     <servlet-mapping>
-        <servlet-name>blogs_list</servlet-name>
+        <servlet-name>blog_list</servlet-name>
         <url-pattern>/blogs/list</url-pattern>
     </servlet-mapping>
 
     <servlet>
-        <servlet-name>blogs_search</servlet-name>
-        <jsp-file>/WEB-INF/jsp/blogs/blogs_search.jsp</jsp-file>
+        <servlet-name>blog_search</servlet-name>
+        <jsp-file>/WEB-INF/jsp/blogs/blog_search.jsp</jsp-file>
     </servlet>
     <servlet-mapping>
-        <servlet-name>blogs_search</servlet-name>
+        <servlet-name>blog_search</servlet-name>
         <url-pattern>/blogs/search</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>blog_view</servlet-name>
+        <jsp-file>/WEB-INF/jsp/blogs/blog_view.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>blog_view</servlet-name>
+        <url-pattern>/blogs/view</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>blog_retrieve</servlet-name>
+        <jsp-file>/WEB-INF/jsp/blogs/blog_retrieve.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>blog_retrieve</servlet-name>
+        <url-pattern>/blogs/retrieve</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>blog_create</servlet-name>
+        <jsp-file>/WEB-INF/jsp/blogs/blog_create.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>blog_create</servlet-name>
+        <url-pattern>/blogs/create</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>blog_create_action</servlet-name>
+        <jsp-file>/WEB-INF/jsp/blogs/blog_create_action.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>blog_create_action</servlet-name>
+        <url-pattern>/blogs/create_action</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>blog_update</servlet-name>
+        <jsp-file>/WEB-INF/jsp/blogs/blog_update_action.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>blog_update</servlet-name>
+        <url-pattern>/blogs/update_action</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>sec_demo</servlet-name>
+        <jsp-file>/WEB-INF/jsp/demo/demo_links.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>sec_demo</servlet-name>
+        <url-pattern>/demo/links</url-pattern>
     </servlet-mapping>
 </web-app>

@@ -10,6 +10,7 @@ public class AccountHelper {
 
     /**
      * generates a secure random 8 bytes salt
+     *
      * @return 8 bytes salt
      */
     public static byte[] getNewSalt() {
@@ -21,7 +22,8 @@ public class AccountHelper {
     /**
      * return a hash(salt + password) hashed password
      * use this instead of mysql built-in hasher to avoids sql-injection
-     * @param salt the salt
+     *
+     * @param salt     the salt
      * @param password the password
      * @return hashed password
      */
@@ -36,6 +38,12 @@ public class AccountHelper {
             e.printStackTrace();
         }
         return new byte[]{};
+    }
+
+    public static String generateCSRFToken() {
+        byte[] csrfBytes = new byte[64];
+        random.nextBytes(csrfBytes);
+        return toHex(csrfBytes);
     }
 
     public static String toHex(byte[] bytes) {

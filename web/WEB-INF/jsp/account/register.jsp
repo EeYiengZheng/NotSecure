@@ -3,6 +3,13 @@
 <jsp:useBean id='user' scope='session' class='main.java.beans.UserBean'/>
 <jsp:setProperty name='user' property='*'/>
 
+<%
+    if (user.isLoggedIn()) {
+        RequestDispatcher rd = request.getRequestDispatcher("/");
+        response.sendRedirect("/");
+    }
+%>
+
 <c:set var="bodyContent">
     <div class="container">
         <div class="row justify-content-md-center">
@@ -124,7 +131,7 @@
                     error: function (xhr, ajaxOptions, thrownError) {
                         console.log(xhr.status);
                         console.log(thrownError);
-                        $("#err-msg").text("POST request failed. " + thrownError + " :" + xhr.status);
+                        $("#err-msg").text("Failed to contact server. " + thrownError + " :" + xhr.status);
                     }
                 });
             }
