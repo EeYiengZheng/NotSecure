@@ -4,6 +4,7 @@
 <%@ page import="java.time.Instant" %>
 <%@ page import="java.time.LocalDateTime" %>
 <%@ page import="java.time.ZoneId" %>
+<%@ page import="main.java.helpers.org.freeshell.zs.common.HtmlManipulator" %>
 
 <jsp:useBean id='user' scope='session' class='main.java.beans.UserBean'/>
 
@@ -20,10 +21,10 @@
                 while (rs.next()) {
                     long blogID = rs.getLong("blog_id");
 
-                    String title = rs.getString("title");
+                    String title = HtmlManipulator.replaceHtmlEntities(rs.getString("title"));
                     title = title.length() > 30 ? title.substring(0, 30).trim() + "..." : title.trim();
 
-                    String contentSnip = rs.getString("content");
+                    String contentSnip = HtmlManipulator.replaceHtmlEntities(rs.getString("content"));
                     contentSnip = contentSnip.length() == 150 ? contentSnip.trim() + "..." : contentSnip.trim();
 
                     String dispName = rs.getString("display_name");
@@ -76,11 +77,11 @@
     </jsp:attribute>
     <jsp:body>
         <div>
-            <div class="panel panel-heading" style="margin-bottom: 30px;">
-                <h1 class="text-center panel-text-size">NotSecure</h1>
-                <h3 class="text-center panel-text-size">A blog for security nerds</h3>
-                <p class="text-center panel-text-size">Below is a small set of what you can expect</p>
-                <p class="text-center panel-text-size">Not enough? Use the search bar.<br>How about signup and write your own?</p>
+            <div class=" " style="margin-bottom: 30px;">
+                <h1 class="text-center -text-size">NotSecure</h1>
+                <h3 class="text-center -text-size">A blog for security nerds</h3>
+                <p class="text-center -text-size">Below is a small set of what you can expect</p>
+                <p class="text-center -text-size">Not enough? Use the search bar.<br>How about signup and write your own?</p>
             </div>
             <div id="err-msg" align="center">
                 <c:if test="${not empty errorMessages}">
@@ -90,7 +91,7 @@
                 </c:if>
             </div>
             <br>
-            <div class="panel-body">
+            <div class="">
                     ${bodyContent}
             </div>
         </div>

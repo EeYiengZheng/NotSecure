@@ -19,9 +19,9 @@
         <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
     </jsp:attribute>
     <jsp:attribute name="belowHead">
-            <div class="panel panel-heading" style="margin-bottom: 30px;">
-                <h3 class="text-center panel-text-size">New Blog</h3>
-                <p class="text-center panel-text-size">NotSecure supports Markdown! <br>
+            <div class=" " style="margin-bottom: 30px;">
+                <h3 class="text-center -text-size">New Blog</h3>
+                <p class="text-center -text-size">NotSecure supports Markdown! <br>
                     Click on the eye symbol to preview your Markdown article.<br>
                     Confused? Learn more about <a href="<c:url value="/blogs/view?blog_id=29"/>">Markdown syntax</a>
                 </p>
@@ -31,7 +31,7 @@
                     <div class="form-group">
                         <input style="display: block; width: 100%; padding-left: 10px;" class="disabled"
                                id="article_title" name="article_title" type="text" placeholder=" Title?" required
-                               pattern="[a-z A-Z_0-9]{1,256}"/>
+                               pattern="[a-zA-Z_0-9 ',.?!]{1,256}"/>
                     </div>
                     <div class="form-group">
                         <textarea id="article_content" name="article_content" required></textarea>
@@ -67,7 +67,7 @@
             var title = document.getElementById("article_title");
             title.addEventListener("input", function (event) {
                 if (title.validity.patternMismatch) {
-                    title.setCustomValidity("Title must contains only a-zA-Z_0-9 and spaces");
+                    title.setCustomValidity("Title must contains only a-zA-Z_0-9 ',.?! and spaces");
                 } else title.setCustomValidity("");
             });
         </script>

@@ -14,6 +14,7 @@
             String query = "SELECT DISTINCT blog_id, title, display_name, LEFT(content , 150) AS content, created FROM blogs NATURAL JOIN (SELECT username AS author, display_name FROM users)un WHERE title LIKE ? OR content LIKE ? LIMIT ?";
 
             try {
+                System.out.println();
                 PreparedStatement stmt = conn.prepareStatement(query);
 
                 String titleFilter = request.getParameter("title_filter");
@@ -81,6 +82,7 @@
         <%
                 }
             } catch (SQLException e) {
+                e.printStackTrace();
                 rd = request.getRequestDispatcher("/");
                 errorMessages.add("Error retrieving blogs");
                 request.setAttribute("errorMessages", errorMessages);
@@ -96,9 +98,9 @@
         <title>Your Blogs</title>
     </jsp:attribute>
     <jsp:attribute name="belowHead">
-        <div class="panel panel-heading" style="margin-bottom: 30px;">
-            <h3 class="text-center panel-text-size">Search for blogs</h3>
-            <p class="text-center panel-text-size">Did you find you want? <br>
+        <div class=" " style="margin-bottom: 30px;">
+            <h3 class="text-center -text-size">Search for blogs</h3>
+            <p class="text-center -text-size">Did you find you want? <br>
                 You can search by title, content or both<br>
                 Further refine your search below
             </p>

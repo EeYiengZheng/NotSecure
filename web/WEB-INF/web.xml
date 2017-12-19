@@ -129,4 +129,8 @@
         <servlet-name>sec_demo</servlet-name>
         <url-pattern>/demo/links</url-pattern>
     </servlet-mapping>
+    <mime-mapping>
+        <extension>png</extension>
+        <mime-type>image/png</mime-type>
+    </mime-mapping>
 </web-app>

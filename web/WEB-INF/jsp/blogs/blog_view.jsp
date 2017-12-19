@@ -26,11 +26,11 @@
         <div class="row">
             <div class="col-sm-6">
                 <input id="blog-update-btn" type="submit" value="Update" name="update_btn"
-                       class="btn btn-primary btn-block">
+                       class="btn btn-default btn-block">
             </div>
             <div class="col-sm-6" align="right">
                 <input id="blog-delete-btn" type="submit" value="Delete" name="delete_btn"
-                       class="btn btn-default">
+                       class="btn btn-danger">
             </div>
         </div>
     </div>
@@ -51,7 +51,7 @@
                     <div class="form-group">
                         <input style="display: block; width: 100%; padding-left: 10px;" class="disabled"
                                id="article_title" name="article_title" type="text" placeholder=" Title?" required
-                               disabled pattern="[a-z A-Z_0-9]{1,256}"/>
+                               disabled pattern="[a-zA-Z_0-9 ',.?!]{1,256}"/>
                     </div>
                     <div class="form-group">
                         <textarea id="article_content" name="article_content" required></textarea>
@@ -102,7 +102,7 @@
                             element: $("#article_content")[0],
                             forceSync: true,
                             placeholder: "Type here...",
-                            initialValue: $(respond).find('content').text()
+                            initialValue: $("<div/>").html($(respond).find("content").text()).text()
                         });
                         </c:when>
                         <c:otherwise>
@@ -111,14 +111,14 @@
                             element: $("#article_content")[0],
                             forceSync: true,
                             placeholder: "Type here...",
-                            initialValue: $(respond).find('content').text(),
+                            initialValue: $("<div/>").html($(respond).find("content").text()).text(),
                             toolbar: false,
                             toolbarTips: false
                         });
                         </c:otherwise>
                         </c:choose>
                         simplemde.togglePreview();
-                        $("#article_title").val($(respond).find('title').text() + " - By: " + $(respond).find('author').text());
+                        $("#article_title").val($("<div/>").html($(respond).find('title').text()).text() + " - By: " + $("<div/>").html($(respond).find('author').text()).text());
 
 
                     },
@@ -141,7 +141,7 @@
                 var title = document.getElementById("article_title");
                 title.addEventListener("input", function (event) {
                     if (title.validity.patternMismatch) {
-                        title.setCustomValidity("Title must contains only a-zA-Z_0-9 and spaces");
+                        title.setCustomValidity("Title must contains only a-zA-Z_0-9 ',.?! and spaces");
                     } else title.setCustomValidity("");
                 });
 

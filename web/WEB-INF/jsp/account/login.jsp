@@ -15,11 +15,11 @@
     <div class="container">
         <div class="row justify-content-md-center">
             <div class="col-md-6">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
+                <div class=" ">
+                    <div class="">
                         <h2 class="" style="margin-bottom: 5px;">Login</h2><br>
                     </div>
-                    <div class="panel-body">
+                    <div class="">
                         <form role="form" method="POST" action="<c:url value="/account/login_action"/> ">
                             <div class="form-group">
                                 <input type="text" name="username" id="user_name" class="form-control input-sm"

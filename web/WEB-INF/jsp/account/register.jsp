@@ -14,12 +14,12 @@
     <div class="container">
         <div class="row justify-content-md-center">
             <div class="col-md-8">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
+                <div class=" ">
+                    <div class="">
                         <h2 class="" style="margin-bottom: 5px;">Register
                         </h2><br>
                     </div>
-                    <div class="panel-body">
+                    <div class="">
                         <form id="reg_form" role="form" method="POST"
                               action="<c:url value="/account/register_action"/>">
                             <div class="form-group">

@@ -1,6 +1,8 @@
 <%@ page import="java.time.Instant" %>
 <%@ page import="java.time.LocalDateTime" %>
 <%@ page import="java.time.ZoneId" %>
+<%@ page import="main.java.helpers.org.freeshell.zs.common.HtmlManipulator" %>
+
 <%@include file="/WEB-INF/jsp/databases.jsp" %>
 <jsp:useBean id="user" class="main.java.beans.UserBean" scope="session"/>
 
@@ -48,10 +50,10 @@
                 while (rs.next()) {
                     long blogID = rs.getLong("blog_id");
 
-                    String title = rs.getString("title");
+                    String title = HtmlManipulator.replaceHtmlEntities(rs.getString("title"));
                     title = title.length() > 30 ? title.substring(0, 30).trim() + "..." : title.trim();
 
-                    String contentSnip = rs.getString("content");
+                    String contentSnip = HtmlManipulator.replaceHtmlEntities(rs.getString("content"));
                     contentSnip = contentSnip.length() == 150 ? contentSnip.trim() + "..." : contentSnip.trim();
 
 
@@ -106,9 +108,9 @@
         <title>Your Blogs</title>
     </jsp:attribute>
     <jsp:attribute name="belowHead">
-        <div class="panel panel-heading" style="margin-bottom: 30px;">
-            <h3 class="text-center panel-text-size">Hey, here are some of your blogs</h3>
-            <p class="text-center panel-text-size">Filter them to get the most relevant ones</p>
+        <div class=" " style="margin-bottom: 30px;">
+            <h3 class="text-center -text-size">Hey, here are some of your blogs</h3>
+            <p class="text-center -text-size">Filter them to get the most relevant ones</p>
         </div>
                 <div id="err-msg">
                         <c:if test="${not empty errorMessages}">
