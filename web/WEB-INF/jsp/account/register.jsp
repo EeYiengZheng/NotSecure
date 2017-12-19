@@ -117,24 +117,24 @@
                 else console.log(fail);
             });
 
-            function onSubmit(token) {
-                $.ajax({
-                    url: '<c:url value="/account/register_action"/>',
-                    type: 'POST',
-                    dataType: 'html',
-                    data: $("#reg_form").serialize(),
-                    success: function (respond) {
-                        console.log("ajax success");
-                        console.log("register_action triggered");
-                        $("html").html(respond);
-                    },
-                    error: function (xhr, ajaxOptions, thrownError) {
-                        console.log(xhr.status);
-                        console.log(thrownError);
-                        $("#err-msg").text("Failed to contact server. " + thrownError + " :" + xhr.status);
-                    }
-                });
-            }
+function onSubmit(token) {
+    $.ajax({
+        url: '<c:url value="/account/register_action"/>',
+        type: 'POST',
+        dataType: 'html',
+        data: $("#reg_form").serialize(),
+        success: function (respond) {
+            console.log("ajax success");
+            console.log("register_action triggered");
+            $("html").html(respond);
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            console.log(xhr.status);
+            console.log(thrownError);
+            $("#err-msg").text("Failed to contact server. " + thrownError + " :" + xhr.status);
+        }
+    });
+}
         </script>
 
     </jsp:attribute>

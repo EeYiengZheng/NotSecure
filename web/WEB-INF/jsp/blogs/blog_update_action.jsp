@@ -46,8 +46,6 @@
     long cbid = ((Long) session.getAttribute("curBlogID"));
 
     String query = "";
-    System.out.println(update);
-    System.out.println(delete);
     if (update != null) {
         query = "UPDATE blogs SET content=? WHERE blog_id=?";
         try {
@@ -77,7 +75,6 @@
             PreparedStatement stmt = conn.prepareStatement(query);
             stmt.setLong(1, cbid);
             int ret = stmt.executeUpdate();
-            System.out.println("here1");
             if (ret == 1) {
                 errorMessages.add("Deleted article");
                 request.setAttribute("errorMessages", errorMessages);
@@ -95,5 +92,4 @@
         }
 
     }
-    System.out.println("here2");
 %>

@@ -125,7 +125,7 @@
                     error: function (xhr, ajaxOptions, thrownError) {
                         console.log(xhr.status);
                         console.log(thrownError);
-                        console.log("GET request failed. " + thrownError + " :" + xhr.status);
+                        console.log("POST request failed. " + thrownError + " :" + xhr.status);
                         var simplemde = new SimpleMDE({
                             autofocus: true,
                             element: $("#article_content")[0],

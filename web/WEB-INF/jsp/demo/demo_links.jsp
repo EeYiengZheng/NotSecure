@@ -8,7 +8,7 @@
     <div class="list-group">
     <%
         String query = "SELECT * FROM blogs WHERE blog_id=? LIMIT 1";
-        int[] blogIDs = {1, 29, 32};
+        int[] blogIDs = {1, 29, 32, 33, 34, 35, 36, 37};
         String linkTitle = "No title";
         for (int id : blogIDs) {
             try {
